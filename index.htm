@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LED Builder</title>
+    <link rel="stylesheet" href="default.css">
+    <script type="module" src="application.js"></script>
+    <script src="ui.js" defer></script>
+    <script data-search-pseudo-elements defer src="https://kit.fontawesome.com/b5c19284e0.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <menubar>
+        LED Builder
+    </menubar>
+    <content>
+        <sidebar>
+            <config>
+                <configSection id="panel" class="expand">
+                    <configTitle>Panel</configTitle>
+                    <div>
+                        <label for="panel_select">Panel Type: </label>
+                        <select id="panel_select">
+                            <option value="custom">Custom...</option>
+                        </select>
+                    </div>
+                    <configDependent id="custom_panel">
+                        <div>
+                            <label for="panel_width">Panel Width:</label>
+                            <input type="number" id="panel_width" value="128">
+                        </div>
+                        <div>
+                            <label for="panel_height">Panel Height:</label>
+                            <input type="number" id="panel_height" value="128">
+                        </div>
+                    </configDependent>
+                </configSection>
+                <configSection id="map" class="expand">
+                    <configTitle>Map</configTitle>
+                    <div>
+                        <label for="map_width">Map Width:</label>
+                        <input type="number" step="0.5" id="map_width" value="10">
+                    </div>
+                    <div>
+                        <label for="map_height">Map Height:</label>
+                        <input type="number" step="0.5" id="map_height" value="6">
+                    </div>
+                </configSection>
+                <configSection id="styles" class="collapse">
+                    <configTitle>Styling</configTitle>
+                    <div>
+                        <label for="color_method">Color Method:</label>
+                        <select id="color_method">
+                            <option value="checkerboard" default>Checkerboard</option>
+                            <option value="solid">Solid</option>
+                        </select>
+                    </div>
+                    <group id="panel_colors">
+                        <input type="color" value="#cc4400">
+                        <input type="color" value="#0088cc">
+                    </group>
+                    <div>
+                        <label for="map_border">Border:</label>
+                        <input id="map_border" type="color" value="#000000">
+                    </div>
+                    <div>
+                        <label for="power_color">Power Connections:</label>
+                        <input id="power_color" type="color" value="#FF0000">
+                    </div>
+                    <div>
+                        <label for="data_color">Data Connections:</label>
+                        <input id="data_color" type="color" value="#0000FF">
+                    </div>
+                </configSection>
+                <configSection id="data_wiring" class="expand">
+                    <configTitle>Data Wiring</configTitle>
+                    <div>
+                        <label for="wiring_data_enable">Show Data Wiring:</label>
+                        <input id="wiring_data_enable" type="checkbox" checked>
+                    </div>
+                    <div>
+                        Processor:
+                        <select id="processor_select">
+                            <option value="custom">Custom...</option>
+                        </select>
+                    </div>
+                    <group id="processor_options">
+                        <div>
+                            Framerate:
+                            <select id="processor_framerate"></select>
+                        </div>
+                        <div>
+                            Bit Depth:
+                            <select id="processor_bitdepth"></select>
+                        </div>
+                    </group>
+                    <div>
+                        <label for="pixel_capacity">Port Capacity (Pixel Limit):</label>
+                        <input id="pixel_capacity" type="number" value="650000" min="1">
+                    </div>
+                    <div>
+                        Port Capacity (Panel Limit):
+                        <input id="data_panel_capacity" type="number" value="75" min="1">
+                        <div style="font-style: italic;">Maximum for Pixel Limit: <span id="data_panel_max">75</span>
+                        </div>
+                    </div>
+                    <div>
+                        Data Path:<br />
+                        <label for="data_path_U">Column Snake</label>
+                        <input type="radio" id="data_path_U" name="data_path" value="U" checked><br />
+                        <label for="data_path_C">Row Snake</label>
+                        <input type="radio" id="data_path_C" name="data_path" value="C"><br />
+                        <label for="data_path_N">Column Scan</label>
+                        <input type="radio" id="data_path_N" name="data_path" value="N"><br />
+                        <label for="data_path_Z">Row Scan</label>
+                        <input type="radio" id="data_path_Z" name="data_path" value="Z">
+                    </div>
+                    <div>
+                        Data Start:<br />
+                        <label for="data_start_tl">Top Left</label>
+                        <input type="radio" id="data_start_tl" name="data_start" value="TL" checked><br />
+                        <label for="data_start_tr">Top Right</label>
+                        <input type="radio" id="data_start_tr" name="data_start" value="TR"><br />
+                        <label for="data_start_bl">Bottom Left</label>
+                        <input type="radio" id="data_start_bl" name="data_start" value="BL"><br />
+                        <label for="data_start_br">Bottom Right</label>
+                        <input type="radio" id="data_start_br" name="data_start" value="BR">
+                    </div>
+                    <div>
+                        <label for="data_group">Rectangular Groups:</label>
+                        <input type="checkbox" id="data_group">
+                    </div>
+                    <configDependent id="data_group_config">
+                        <div>
+                            Width:
+                            <input type="number" id="data_group_width" value="16" min="1">
+                        </div>
+                        <div>
+                            Height
+                            <input type="number" id="data_group_height" value="9" min="1">
+                        </div>
+                    </configDependent>
+                </configSection>
+                <configSection id="power_wiring" class="collapse">
+                    <configTitle>Power Wiring</configTitle>
+                    <div>
+                        <label for="wiring_power_enable">Show Power Wiring:</label>
+                        <input id="wiring_power_enable" type="checkbox">
+                    </div>
+                    <div>
+                        <label for="power_capacity">Power Capacity:</label>
+                        <select id="power_capacity">
+                            <option value="120_16" watts="1920">120V 16A</option>
+                            <option value="120_20" watts="2400">120V 20A</option>
+                            <option value="240_10" watts="2400" selected>240V 10A</option>
+                            <option value="240_15" watts="3600">240V 15A</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="power_panel_capacity">Panel Capacity:</label>
+                        <input id="power_panel_capacity" type="number" value="16">
+                        <div style="font-style: italic;">Maximum for Circuit: <span id="power_panel_max">16</span></div>
+                    </div>
+                    <div>
+                        Power Path:<br />
+                        <label for="power_path_U">Column Snake</label>
+                        <input type="radio" id="power_path_U" name="power_path" value="U" checked><br />
+                        <label for="power_path_C">Row Snake</label>
+                        <input type="radio" id="power_path_C" name="power_path" value="C"><br />
+                        <label for="power_path_N">Column Scan</label>
+                        <input type="radio" id="power_path_N" name="power_path" value="N"><br />
+                        <label for="power_path_Z">Row Scan</label>
+                        <input type="radio" id="power_path_Z" name="power_path" value="Z">
+                    </div>
+                    <div>
+                        Power Start:<br />
+                        <label for="power_start_tl">Top Left</label>
+                        <input type="radio" id="power_start_tl" name="power_start" value="TL" checked><br />
+                        <label for="power_start_tr">Top Right</label>
+                        <input type="radio" id="power_start_tr" name="power_start" value="TR"><br />
+                        <label for="power_start_bl">Bottom Left</label>
+                        <input type="radio" id="power_start_bl" name="power_start" value="BL"><br />
+                        <label for="power_start_br">Bottom Right</label>
+                        <input type="radio" id="power_start_br" name="power_start" value="BR">
+                    </div>
+                    <div>
+                        <label for="power_group">Rectangular Groups:</label>
+                        <input type="checkbox" id="power_group">
+                    </div>
+                    <configDependent id="power_group_config">
+                        <div>
+                            Width:
+                            <input type="number" id="power_group_width" value="16" min="1">
+                        </div>
+                        <div>
+                            Height
+                            <input type="number" id="power_group_height" value="9" min="1">
+                        </div>
+                    </configDependent>
+                </configSection>
+                <configSection id="project" class="expand">
+                    <configTitle>Project</configTitle>
+                    <div>
+                        Project Name:
+                        <input type="text" id="project_name" readonly>
+                    </div>
+                    <div id="project_screens">
+                        
+                    </div>
+                    <div>
+                        <a id="add_screen"><i class="fas fa-plus"></i> Add Screen</a>
+                    </div>
+                </configSection>
+            </config>
+        </sidebar>
+        <output_canvas id="output_canvas">
+        </output_canvas>
+    </content>
+</body>
+
+</html>

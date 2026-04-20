@@ -62,11 +62,11 @@ function panel_change() {
 }
 
 function port_change() {
-    var processor = processorLibrary[document.getElementById("processor_select").value]
-    let pixel_capacity = (processor.port_capacity * (1000 ** 3) * processor.efficiency / 100) / (document.getElementById("processor_bitdepth").selectedOptions[0].getAttribute("weight") * 3) / document.getElementById("processor_framerate").value
-
-    document.getElementById("pixel_capacity").value = pixel_capacity;
-
+    if (document.getElementById("processor_select").value != "custom") {
+        var processor = processorLibrary[document.getElementById("processor_select").value]
+        let pixel_capacity = (processor.port_capacity * (1000 ** 3) * processor.efficiency / 100) / (document.getElementById("processor_bitdepth").selectedOptions[0].getAttribute("weight") * 3) / document.getElementById("processor_framerate").value
+        document.getElementById("pixel_capacity").value = pixel_capacity;
+    }
     screen_change()
 }
 
@@ -88,9 +88,9 @@ function color_method() {
     var panel_colors = document.getElementById("panel_colors");
     var method = document.getElementById("color_method").value
 
-    panel_colors.innerHTML = '<input type="color" value="#cc4400">'
+    panel_colors.innerHTML = '<input type="color" value="#FFC852">'
     if (method == "checkerboard") {
-        panel_colors.innerHTML += '<input type="color" value="#0088cc">'
+        panel_colors.innerHTML += '<input type="color" value="#00C8A0">'
     }
 
     Object.entries(panel_colors.children).forEach(colorcell => {
@@ -121,7 +121,7 @@ function generate_map() {
     var screencontext = screenmap.getContext("2d");
     for (let w = 0; w < map_width; w++) {
         for (let h = 0; h < map_height; h++) {
-            let colorIndex = (w + h) % 2;
+            let colorIndex = (w + h) % panel_colors.length;
             rect(screencontext, w * panel_width, h * panel_height, panel_width, panel_height, panel_colors[colorIndex].value, map_border)
         }
     }
@@ -477,7 +477,6 @@ async function decompress(b64) {
 
 function screen_from_json(json) {
     let screen_map = JSON.parse(json);
-    console.log("screen_from_json", screen_map)
     document.getElementById("panel_select").value = screen_map.panel.s
     document.getElementById("panel_width").value = screen_map.panel.w
     document.getElementById("panel_height").value = screen_map.panel.h
@@ -667,23 +666,22 @@ function delete_screen(event) {
     } else {
         return;
     }
-    window.tgx = target
-    if (target.parentNode.classList.contains("screen_active")) {
+    let target_screen = target.parentNode;
+    if (target_screen.classList.contains("screen_active")) {
         return;
     }
-
+    let target_index = Array.from(document.getElementById("project_screens").children).indexOf(target_screen);
+    project.screens.splice(target_index,1);
+    target_screen.remove();
     project_change();
 }
 
 function add_screen_click() {
-
     let active_screen = document.querySelector("project_screen[class=screen_active]")
     let active_index = Array.from(document.getElementById("project_screens").children).indexOf(active_screen)
     screen_change()
-    add_screen()
     project.screens[document.getElementById("project_screens").children.length] = project.screens[active_index]
-
-    
+    add_screen()
 }
 //#endregion
 

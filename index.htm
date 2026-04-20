@@ -4,14 +4,33 @@
 <head>
     <title>LED Builder</title>
     <link rel="stylesheet" href="default.css">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <script type="module" src="application.js"></script>
     <script src="ui.js" defer></script>
-    <script data-search-pseudo-elements defer src="https://kit.fontawesome.com/b5c19284e0.js" crossorigin="anonymous"></script>
+    <script data-search-pseudo-elements defer src="https://kit.fontawesome.com/b5c19284e0.js"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
+    <titlebar>
+        <img src="Title.png" title="LED Builder" style="height: 100px;" />
+    </titlebar>
     <menubar>
-        LED Builder
+        <div id="donate-button-container" style="height: 10px; float: right">
+            <div id="donate-button"></div>
+            <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+            <script>
+                PayPal.Donation.Button({
+                    env: 'production',
+                    hosted_button_id: 'K4GJ2PK5FNNHA',
+                    image: {
+                        src: 'https://www.paypalobjects.com/en_AU/i/btn/btn_donate_LG.gif',
+                        alt: 'Donate with PayPal button',
+                        title: 'PayPal - The safer, easier way to pay online!',
+                    }
+                }).render('#donate-button');
+            </script>
+        </div>
     </menubar>
     <content>
         <sidebar>
@@ -56,8 +75,8 @@
                         </select>
                     </div>
                     <group id="panel_colors">
-                        <input type="color" value="#cc4400">
-                        <input type="color" value="#0088cc">
+                        <input type="color" value="#FFC852">
+                        <input type="color" value="#00C8A0">
                     </group>
                     <div>
                         <label for="map_border">Border:</label>
@@ -205,7 +224,7 @@
                         <input type="text" id="project_name" readonly>
                     </div>
                     <div id="project_screens">
-                        
+
                     </div>
                     <div>
                         <a id="add_screen"><i class="fas fa-plus"></i> Add Screen</a>

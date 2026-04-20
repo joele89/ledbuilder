@@ -1,4 +1,4 @@
 # ledbuilder
 
 ## Donate
-Patreon: Joel662
+Paypal: https://www.paypal.com/donate/?hosted_button_id=K4GJ2PK5FNNHA

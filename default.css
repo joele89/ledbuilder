@@ -6,16 +6,24 @@ html, body {
     flex-direction: column;
     overflow: hidden;
 }
+titlebar {
+    height: 60px;
+}
+titlebar img {
+    position: fixed;
+    height: 100px;
+    width: 400px
+}
 menubar {
     display: block;
-    height: 80px;
+    height: 26px;
     padding: 10px;
-    min-height: 80px;
 }
 content {
     display: flex;
     height: 90%;
     flex-wrap: wrap;
+    border-top: solid #eee 3px;
 }
 sidebar {
     width: 300px;
@@ -106,4 +114,8 @@ project_screen.screen_inactive a.screen_show {
 
 project_screen.screen_inactive a.screen_hide {
     display: unset;
+}
+
+project_screen.screen_active i.fa-trash {
+    color: #CCC;
 }

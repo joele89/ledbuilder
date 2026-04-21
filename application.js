@@ -240,15 +240,15 @@ function calculate_path(type, width, height, startCorner) {
             }
             break;
         case "N":
-            for (let y = 0; y < height; y++) {
-                for (let x = 0; x < width; x++) {
+            for (let x = 0; x < width; x++) {
+                for (let y = 0; y < height; y++) {
                     path.push({ x, y })
                 }
             }
             break;
         case "Z":
-            for (let x = 0; x < width; x++) {
-                for (let y = 0; y < height; y++) {
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
                     path.push({ x, y })
                 }
             }
